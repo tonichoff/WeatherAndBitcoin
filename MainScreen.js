@@ -53,7 +53,6 @@ class MainScreen extends Component {
       var url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_API_KEY}&exclude=minutely,hourly,alerts&units=metric`;
       var response = await fetch(url);
       var json = await response.json();
-      console.log(json);
       var todayWeather = new WeatherData(
           json.current.weather[0].main,
           json.current.temp,

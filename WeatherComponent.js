@@ -8,11 +8,32 @@ import { weatherConditions } from './WeatherConditions';
 import WeatherData from './WeatherData';
 
 class WeatherComponent extends Component {  
+  state = {
+    bitcoinPrice: NaN
+  }
 
   constructor(props) {
     super();
     this.todayWeather = props.todayWeather;
     this.weakWeather = props.weakWeather;
+  }
+
+  componentDidMount() {
+    this.getBitcoinPrice();
+  }
+
+  async getBitcoinPrice() {
+    try {
+      var url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+      var response = await fetch(url);
+      var json = await response.json();
+      console.log(json.bpi.USD.rate_float);
+      this.setState({
+        bitcoinPrice: json.bpi.USD.rate_float
+      });
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   render() {
@@ -30,6 +51,9 @@ class WeatherComponent extends Component {
         <View style={styles.headerContainer}>
           <MaterialCommunityIcons size={72} name={weatherConditions[this.todayWeather.type].icon} color={'#fff'}/>
           <Text style={styles.tempText}>{tempLabel}˚</Text>
+        </View>
+        <View style={{alignItems: 'center'}}>
+          <Text style={styles.subtitle}>BTC {isNaN(this.state.bitcoinPrice) ? '-' : `${Math.round(this.state.bitcoinPrice*100)/100}` + "$"}</Text>
         </View>
         <View style={styles.bodyContainer}>
           <Text style={styles.title}>{weatherConditions[this.todayWeather.type].title}</Text>
@@ -62,7 +86,7 @@ const styles = StyleSheet.create({
     marginBottom: 40
   },
   title: {
-    fontSize: 60,
+    fontSize: 56,
     color: '#fff'
   },
   subtitle: {
