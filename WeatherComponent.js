@@ -7,32 +7,33 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { weatherConditions } from './WeatherConditions';
 import WeatherData from './WeatherData';
 
-class WeatherComponent extends Component {
-  
+class WeatherComponent extends Component {  
 
-  constructor(props, navigation) {
+  constructor(props) {
     super();
-    console.log(navigation);
-    this.weather = props.weather;
+    this.todayWeather = props.todayWeather;
+    this.weakWeather = props.weakWeather;
   }
 
   render() {
-    var tempLabel = this.weather.min == this.weather.max ? `${this.weather.min}` : `${this.weather.min}-${this.weather.max}`;
+    var tempLabel = this.todayWeather.min == this.todayWeather.max ? `${this.todayWeather.min}` : `${this.todayWeather.min}-${this.todayWeather.max}`;
     return (
-      <View style={[ styles.weatherContainer, { backgroundColor: weatherConditions[this.weather.type].color } ]}>
+      <View style={[ styles.weatherContainer, { backgroundColor: weatherConditions[this.todayWeather.type].color } ]}>
         <View style={styles.buttonContainer}>
           <IconButton icon="calendar" color={Colors.white} size={30} onPress={() => {
-            console.log(useNavigation());
-            useNavigation().navigate('WeakScreen');
+            this.props.navigation.navigate("WeakScreen", {
+              backgroundColor: weatherConditions[this.todayWeather.type].color,
+              weakWeather: this.weakWeather,
+            });
           }}/>
         </View>
         <View style={styles.headerContainer}>
-          <MaterialCommunityIcons size={72} name={weatherConditions[this.weather.type].icon} color={'#fff'}/>
+          <MaterialCommunityIcons size={72} name={weatherConditions[this.todayWeather.type].icon} color={'#fff'}/>
           <Text style={styles.tempText}>{tempLabel}˚</Text>
         </View>
         <View style={styles.bodyContainer}>
-          <Text style={styles.title}>{weatherConditions[this.weather.type].title}</Text>
-          <Text style={styles.subtitle}>{weatherConditions[this.weather.type].subtitle}</Text>
+          <Text style={styles.title}>{weatherConditions[this.todayWeather.type].title}</Text>
+          <Text style={styles.subtitle}>{weatherConditions[this.todayWeather.type].subtitle}</Text>
         </View>
       </View>
     );
