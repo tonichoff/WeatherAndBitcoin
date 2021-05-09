@@ -48,12 +48,18 @@ class MainScreen extends Component {
     );
   }
 
+  
+
   async getWeather(lat = 0, lon = 0) {
     try {
       var url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_API_KEY}&exclude=minutely,hourly,alerts&units=metric`;
       var response = await fetch(url);
       var json = await response.json();
+      var todayDate = new Date();
+      todayDate += todayDate.getTimezoneOffset();
       var todayWeather = new WeatherData(
+          0,
+          todayDate,
           json.current.weather[0].main,
           json.current.temp,
           json.current.temp,
@@ -62,7 +68,11 @@ class MainScreen extends Component {
       );
       var weakWeather = [];
       for (var i = 0; i < 7; ++i) {
+        var date = new Date();
+        date.setDate(date.getDate() + i);
         weakWeather.push(new WeatherData(
+          i,
+          date,
           json.daily[i].weather[0].main,
           json.daily[i].temp.min,
           json.daily[i].temp.max,

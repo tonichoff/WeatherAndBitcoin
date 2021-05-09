@@ -27,7 +27,6 @@ class WeatherComponent extends Component {
       var url = "https://api.coindesk.com/v1/bpi/currentprice.json";
       var response = await fetch(url);
       var json = await response.json();
-      console.log(json.bpi.USD.rate_float);
       this.setState({
         bitcoinPrice: json.bpi.USD.rate_float
       });
