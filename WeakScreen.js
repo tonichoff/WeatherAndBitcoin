@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
-import { IconButton, Colors } from 'react-native-paper';
 
 import DayComponent from './DayComponent';
 
@@ -22,28 +21,22 @@ class WeakScreen extends Component {
   }
 
   render() {
-    var button =
-    (<View style={styles.buttonContainer}>
-      <IconButton icon="back" color={Colors.white} size={30} onPress={() => {
-        this.props.navigation.goBack();
-      }}/>
-    </View>);
     if (this.state.weather == null) {
       return (
-        <View style={{flex: 1, justifyContent: 'flex-start', backgroundColor: this.state.backgroundColor}}>{button}</View>
+        <View style={{flex: 1, justifyContent: 'flex-start', backgroundColor: this.state.backgroundColor}}></View>
       );
     }
+    var days = [];
+    for (var i = 0; i < 7; ++i) {
+      days.push((<View><DayComponent dayInfo={this.state.weather[i]}/></View>))
+    }
     return (
-      <View style={{flex: 1, backgroundColor: this.state.backgroundColor}}>
-        {button}
+      <View style={{flex: 1,  backgroundColor: this.state.backgroundColor}}>
         <View style={styles.daysContainer}>
-          <View><DayComponent dayInfo={this.state.weather[0]}/></View>
-          <View><DayComponent dayInfo={this.state.weather[1]}/></View>
-          <View><DayComponent dayInfo={this.state.weather[2]}/></View>
-          <View><DayComponent dayInfo={this.state.weather[3]}/></View>
-          <View><DayComponent dayInfo={this.state.weather[4]}/></View>
-          <View><DayComponent dayInfo={this.state.weather[5]}/></View>
-          <View><DayComponent dayInfo={this.state.weather[6]}/></View>
+          {days}
+          <View><Button styles={styles.backButton} title="Назад" onPress={() => {
+            this.props.navigation.goBack();
+          }}/></View>
         </View>
       </View>
     );
@@ -51,16 +44,11 @@ class WeakScreen extends Component {
 }
 
 var styles = StyleSheet.create({ 
-  buttonContainer: {
-    flex: 2,
-    flexDirection: 'row',
-    justifyContent: 'flex-end'
-  },
   daysContainer: {
     flex: 2,
     flexDirection: 'column',
-    justifyContent: 'center'
-  }
+    justifyContent: 'space-around'
+  },
 });
 
 export default WeakScreen;

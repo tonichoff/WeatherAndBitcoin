@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { IconButton, Colors } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { weatherConditions } from './WeatherConditions';
-import WeatherData from './WeatherData';
 
 class WeatherComponent extends Component {  
   state = {

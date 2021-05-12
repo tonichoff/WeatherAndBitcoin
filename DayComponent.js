@@ -20,7 +20,7 @@ class DayComponent extends Component {
         </Text>
         <MaterialCommunityIcons size={50} name={weatherConditions[this.dayInfo.type].icon} color={'#fff'}/>
         <Text style={styles.text}>{tempText}˚</Text>
-        <Text style={styles.text}>{this.dayInfo.windSpeed} в.с.</Text> 
+        <Text style={styles.text}>{this.dayInfo.windSpeed} м.с.</Text> 
       </View>
     );
   }
@@ -35,7 +35,7 @@ var styles = StyleSheet.create({
   text: {
     fontSize: 24,
     color: '#fff'
-  }
+  },
 });
 
 export default DayComponent;

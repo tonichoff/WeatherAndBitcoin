@@ -28,7 +28,7 @@ class MainScreen extends Component {
           />
         ) : (
           <View style={styles.loadingContainer}>
-            <Text style={styles.loadingText}>Fetching The Weather</Text>
+            <Text style={styles.loadingText}>Загрузка</Text>
           </View>
         )}
       </View>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFDE4',
+    backgroundColor: 'white',
   },
   loadingText: {
     fontSize: 30,
